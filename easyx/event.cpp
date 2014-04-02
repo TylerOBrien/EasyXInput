@@ -32,7 +32,7 @@ namespace easyx {
      *
      * */
     Event::Event()
-        : controller(-1),
+        : gamepad(-1),
           type(0),
           which(0),
           angle(0) {
@@ -42,7 +42,7 @@ namespace easyx {
     /*
      * Constructor
      *
-        * @param  The ID of the controller. Will be an integer between 0-3.
+        * @param  The ID of the gamepad. Will be an integer between 0-3.
         * @param  The event type, e.g. EZX_PRESS or EZX_CONNECT.
         * @param  The ID of the thing that triggered this event, e.g. EZX_A or EZX_LTRIGGER.
      *
@@ -51,10 +51,10 @@ namespace easyx {
         * EZX_PRESS, EZX_RELEASE, EZX_CONNECT, EZX_DISCONNECT
      * */
     Event::Event(
-        ControllerID controller,
+        GamepadID gamepad,
         EventType type,
         ButtonID which)
-        : controller(controller),
+        : gamepad(gamepad),
           type(type),
           which(which),
           angle(0) {
@@ -64,7 +64,7 @@ namespace easyx {
     /*
      * Constructor
      *
-        * @param  The ID of the controller. Will be an integer between 0-3.
+        * @param  The ID of the gamepad. Will be an integer between 0-3.
         * @param  The event type, e.g. EZX_ANALOG.
         * @param  The ID of the thing that triggered this event, e.g. EZX_A or EZX_LTRIGGER.
         * @param  The angle of the analog that triggered this event.
@@ -74,11 +74,11 @@ namespace easyx {
         * EZX_ANALOG
      * */
     Event::Event(
-        ControllerID controller,
+        GamepadID gamepad,
         EventType type,
         ButtonID which,
         int16_t angle)
-        : controller(controller),
+        : gamepad(gamepad),
           type(type),
           which(which),
           angle(angle) {

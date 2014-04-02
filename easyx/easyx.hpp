@@ -60,7 +60,7 @@
 namespace easyx {
 	class Event;
 
-	typedef uint8_t ControllerID;
+	typedef uint8_t GamepadID;
 	typedef uint16_t ButtonID;
 	typedef int16_t EventType;
 	typedef Event* PEvent;
@@ -68,12 +68,12 @@ namespace easyx {
 	void update();
 	bool poll(PEvent evt);
 	
-	void setAnalogThreshold(ControllerID controller, ButtonID id, int16_t amount);
+	void setAnalogThreshold(GamepadID controller, ButtonID id, int16_t amount);
 
-	void setVibration(ControllerID controller, uint16_t amount);
-	void setVibration(ControllerID controller, uint16_t left, uint16_t right);
-	void setVibrationLevel(ControllerID controller, float amount);
-	void setVibrationLevel(ControllerID controller, float left, float right);
+	void setVibration(GamepadID controller, uint16_t amount);
+	void setVibration(GamepadID controller, uint16_t left, uint16_t right);
+	void setVibrationLevel(GamepadID controller, float amount);
+	void setVibrationLevel(GamepadID controller, float left, float right);
 }
 
 #include <easyx\event.hpp>

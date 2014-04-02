@@ -44,14 +44,14 @@ namespace easyx {
      * */
     class Event {
 	public:
-        ControllerID controller;
+        GamepadID gamepad;
         EventType type;
         int16_t angle;
         ButtonID which;
 
         Event();
-        Event(ControllerID controller, EventType type, ButtonID which);
-        Event(ControllerID controller, EventType type, ButtonID which, int16_t angle);
+        Event(GamepadID gamepad, EventType type, ButtonID which);
+        Event(GamepadID gamepad, EventType type, ButtonID which, int16_t angle);
     };
 }
 

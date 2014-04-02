@@ -34,8 +34,8 @@
 #define LANALOG_THRESHOLD_Y   (XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE + data::thresholds[id][1])
 #define RANALOG_THRESHOLD_X   (XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE + data::thresholds[id][2])
 #define RANALOG_THRESHOLD_Y   (XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE + data::thresholds[id][3])
-#define LTRIGGER_ANGLE(ID)    data::controller_states[ID].Gamepad.bLeftTrigger
-#define RTRIGGER_ANGLE(ID)    data::controller_states[ID].Gamepad.bRightTrigger
+#define LTRIGGER_ANGLE(ID)    data::gamepad_states[ID].Gamepad.bLeftTrigger
+#define RTRIGGER_ANGLE(ID)    data::gamepad_states[ID].Gamepad.bRightTrigger
 
 namespace easyx {
 	namespace data {
@@ -57,7 +57,7 @@ namespace easyx {
 		};
 		
 		bool connections[XUSER_MAX_COUNT];
-		XINPUT_STATE controller_states[XUSER_MAX_COUNT];
+		XINPUT_STATE gamepad_states[XUSER_MAX_COUNT];
 		bool button_states[XUSER_MAX_COUNT][14];
 		int16_t thresholds[XUSER_MAX_COUNT][6];
 		int16_t stickangles[XUSER_MAX_COUNT][4];
@@ -70,11 +70,11 @@ namespace easyx {
 		/*
 		 * detect::connect() returns nothing
 		 *
-			*	@param  The id of the controller.
+			*	@param  The id of the gamepad.
 		 *
-		 * Determines if the passed controller has just connected.
+		 * Determines if the passed gamepad has just connected.
 		 * */
-		void connect(ControllerID id) {
+		void connect(GamepadID id) {
 			if (data::connections[id] == false) {
 				data::connections[id] = true;
 				data::events.push(Event(id, EASYX_EVENT_CONNECT, id));
@@ -84,11 +84,11 @@ namespace easyx {
 		/*
 		 * detect::disconnect() returns nothing
 		 *
-			*	@param  The id of the controller.
+			*	@param  The id of the gamepad.
 		 *
-		 * Determines if the passed controller has just disconnected.
+		 * Determines if the passed gamepad has just disconnected.
 		 * */
-		void disconnect(ControllerID id) {
+		void disconnect(GamepadID id) {
 			if (data::connections[id]) {
 				data::connections[id] = false;
 				data::events.push(Event(id, EASYX_EVENT_DISCONNECT, id));
@@ -98,14 +98,14 @@ namespace easyx {
 		/*
 		 * detect::triggers() returns nothing
 		 *
-			*	@param  The id of the controller.
+			*	@param  The id of the gamepad.
 		 *
-		 * Determines if the passed controller has had one of, or both of, its
+		 * Determines if the passed gamepad has had one of, or both of, its
 		 * triggers pressed down at any angle other than zero. The last two
 		 * lines are necessary for the function to determine if the current trigger
 		 * is different from the previous trigger state.
 		 * */
-		void triggers(ControllerID id) {
+		void triggers(GamepadID id) {
 			if (LTRIGGER_ANGLE(id)) {
 				data::events.push(Event(id, EASYX_EVENT_DOWN, EASYX_LTRIGGER, LTRIGGER_ANGLE(id)));
 			} else if(data::triggerangles[id][0]) {
@@ -125,7 +125,7 @@ namespace easyx {
 		/*
 		 * detect::sticks() returns nothing
 		 *
-			*	@param  The id of the controller.
+			*	@param  The id of the gamepad.
 		 *
 		 * Determines the state of both of the analog sticks, on both the
 		 * X and Y axes. Because of the nature of determining if an analog
@@ -137,34 +137,34 @@ namespace easyx {
 		 * unlikely that XInput will ever support more than two analog sticks
 		 * one is not used for the sake of improving performance.
 		 * */
-		void sticks(ControllerID id) {
-			if (data::controller_states[id].Gamepad.sThumbLX >= LANALOG_THRESHOLD_X || data::controller_states[id].Gamepad.sThumbLX <= -LANALOG_THRESHOLD_X) {
-				data::events.push(Event(id, EASYX_EVENT_DOWN, EASYX_LTHUMB_X, data::controller_states[id].Gamepad.sThumbLX));
-				data::stickangles[id][0] = data::controller_states[id].Gamepad.sThumbLX;
+		void sticks(GamepadID id) {
+			if (data::gamepad_states[id].Gamepad.sThumbLX >= LANALOG_THRESHOLD_X || data::gamepad_states[id].Gamepad.sThumbLX <= -LANALOG_THRESHOLD_X) {
+				data::events.push(Event(id, EASYX_EVENT_DOWN, EASYX_LTHUMB_X, data::gamepad_states[id].Gamepad.sThumbLX));
+				data::stickangles[id][0] = data::gamepad_states[id].Gamepad.sThumbLX;
 			} else if(data::stickangles[id][0]) {
 				data::events.push(Event(id, EASYX_EVENT_RELEASE, EASYX_LTHUMB_X));
 				data::stickangles[id][0] = 0;
 			}
 
-			if (data::controller_states[id].Gamepad.sThumbLY >= LANALOG_THRESHOLD_Y || data::controller_states[id].Gamepad.sThumbLY <= -LANALOG_THRESHOLD_Y) {
-				data::events.push(Event(id, EASYX_EVENT_DOWN, EASYX_LTHUMB_Y, data::controller_states[id].Gamepad.sThumbLY));
-				data::stickangles[id][1] = data::controller_states[id].Gamepad.sThumbLY;
+			if (data::gamepad_states[id].Gamepad.sThumbLY >= LANALOG_THRESHOLD_Y || data::gamepad_states[id].Gamepad.sThumbLY <= -LANALOG_THRESHOLD_Y) {
+				data::events.push(Event(id, EASYX_EVENT_DOWN, EASYX_LTHUMB_Y, data::gamepad_states[id].Gamepad.sThumbLY));
+				data::stickangles[id][1] = data::gamepad_states[id].Gamepad.sThumbLY;
 			} else if(data::stickangles[id][1]) {
 				data::events.push(Event(id, EASYX_EVENT_RELEASE, EASYX_LTHUMB_Y));
 				data::stickangles[id][1] = 0;
 			}
 
-			if (data::controller_states[id].Gamepad.sThumbRX >= RANALOG_THRESHOLD_X || data::controller_states[id].Gamepad.sThumbRX <= -RANALOG_THRESHOLD_X) {
-				data::events.push(Event(id, EASYX_EVENT_DOWN, EASYX_RTHUMB_X, data::controller_states[id].Gamepad.sThumbRX));
-				data::stickangles[id][2] = data::controller_states[id].Gamepad.sThumbRX;
+			if (data::gamepad_states[id].Gamepad.sThumbRX >= RANALOG_THRESHOLD_X || data::gamepad_states[id].Gamepad.sThumbRX <= -RANALOG_THRESHOLD_X) {
+				data::events.push(Event(id, EASYX_EVENT_DOWN, EASYX_RTHUMB_X, data::gamepad_states[id].Gamepad.sThumbRX));
+				data::stickangles[id][2] = data::gamepad_states[id].Gamepad.sThumbRX;
 			} else if(data::stickangles[id][2]) {
 				data::events.push(Event(id, EASYX_EVENT_RELEASE, EASYX_RTHUMB_X));
 				data::stickangles[id][2] = 0;
 			}
 
-			if (data::controller_states[id].Gamepad.sThumbRY >= RANALOG_THRESHOLD_Y || data::controller_states[id].Gamepad.sThumbRY <= -RANALOG_THRESHOLD_Y) {
-				data::events.push(Event(id, EASYX_EVENT_DOWN, EASYX_RTHUMB_Y, data::controller_states[id].Gamepad.sThumbRY));
-				data::stickangles[id][3] = data::controller_states[id].Gamepad.sThumbRY;
+			if (data::gamepad_states[id].Gamepad.sThumbRY >= RANALOG_THRESHOLD_Y || data::gamepad_states[id].Gamepad.sThumbRY <= -RANALOG_THRESHOLD_Y) {
+				data::events.push(Event(id, EASYX_EVENT_DOWN, EASYX_RTHUMB_Y, data::gamepad_states[id].Gamepad.sThumbRY));
+				data::stickangles[id][3] = data::gamepad_states[id].Gamepad.sThumbRY;
 			} else if(data::stickangles[id][3]) {
 				data::events.push(Event(id, EASYX_EVENT_RELEASE, EASYX_RTHUMB_Y));
 				data::stickangles[id][3] = 0;
@@ -174,15 +174,15 @@ namespace easyx {
 		/*
 		 * buttons() returns nothing
 		 *
-			*	@param  The id of the controller.
+			*	@param  The id of the gamepad.
 		 *
 		 * Determines the state of any of the pressable buttons (e.g. A, B, X, Y,
 		 * Start, Left Trigger). Only the buttons detected in this function are
 		 * applicable to all three PRESS, DOWN, and RELEASE events.
 		 * */
-		void buttons(ControllerID id) {
+		void buttons(GamepadID id) {
 			for (char i=0; i<14; ++i) {
-				if (data::controller_states[id].Gamepad.wButtons & data::button_ids[i]) {
+				if (data::gamepad_states[id].Gamepad.wButtons & data::button_ids[i]) {
 					if (data::button_states[id][i] == false) {
 						data::button_states[id][i] = true;
 						data::events.push(Event(id, EASYX_EVENT_PRESS, data::button_ids[i]));
@@ -199,11 +199,11 @@ namespace easyx {
 	/*
 	 * update() returns nothing
 	 *
-	 * Updates all controllers, detecting any connections, disconnections, or inputs.
+	 * Updates all gamepads, detecting any connections, disconnections, or inputs.
 	 * */
 	void update() {
-		for (ControllerID i=0; i<XUSER_MAX_COUNT; ++i) {
-			if (XInputGetState(i, &data::controller_states[i]) == ERROR_SUCCESS) {
+		for (GamepadID i=0; i<XUSER_MAX_COUNT; ++i) {
+			if (XInputGetState(i, &data::gamepad_states[i]) == ERROR_SUCCESS) {
 				detect::connect(i);
 				detect::buttons(i);
 				detect::triggers(i);
@@ -237,7 +237,7 @@ namespace easyx {
 	/*
 	 * setAnalogThreshold() returns nothing
 	 *
-		* @param  The id of the controller to have its threshold set.
+		* @param  The id of the gamepad to have its threshold set.
 		* @param  The id of the analog stick(s) to set.
 		* @param  The new threshold.
 	 *
@@ -248,27 +248,27 @@ namespace easyx {
 	 * equivalent of the XInput deadzone definitions will effectively set
 	 * the threshold to zero.
 	 * */
-	void setAnalogThreshold(ControllerID controller, ButtonID id, int16_t amount) {
+	void setAnalogThreshold(GamepadID gamepad, ButtonID id, int16_t amount) {
 		switch (id) {
 		case EASYX_LTHUMB:
-			data::thresholds[controller][0] = amount;
-			data::thresholds[controller][1] = amount;
+			data::thresholds[gamepad][0] = amount;
+			data::thresholds[gamepad][1] = amount;
 			break;
 		case EASYX_RTHUMB:
-			data::thresholds[controller][2] = amount;
-			data::thresholds[controller][3] = amount;
+			data::thresholds[gamepad][2] = amount;
+			data::thresholds[gamepad][3] = amount;
 			break;
 		case EASYX_LTHUMB_X:
-			data::thresholds[controller][0] = amount;
+			data::thresholds[gamepad][0] = amount;
 			break;
 		case EASYX_LTHUMB_Y:
-			data::thresholds[controller][1] = amount;
+			data::thresholds[gamepad][1] = amount;
 			break;
 		case EASYX_RTHUMB_X:
-			data::thresholds[controller][2] = amount;
+			data::thresholds[gamepad][2] = amount;
 			break;
 		case EASYX_RTHUMB_Y:
-			data::thresholds[controller][3] = amount;
+			data::thresholds[gamepad][3] = amount;
 			break;
 		}
 	}
@@ -276,62 +276,62 @@ namespace easyx {
 	/*
 	 * setVibration() returns nothing
 	 *
-		* @param  The id of the controller to vibrate.
+		* @param  The id of the gamepad to vibrate.
 		* @param  The amount to vibrate both sides.
 	 *
-	 * Vibrates the passed controller by the passed amount.
+	 * Vibrates the passed gamepad by the passed amount.
 	 * */
-	void setVibration(ControllerID controller, uint16_t amount) {
-		setVibration(controller, amount, amount);
+	void setVibration(GamepadID gamepad, uint16_t amount) {
+		setVibration(gamepad, amount, amount);
 	}
 
 	/*
 	 * setVibration() returns nothing
 	 *
-		* @param  The id of the controller to vibrate.
+		* @param  The id of the gamepad to vibrate.
 		* @param  The amount to vibrate the left side.
 		* @param  The amount to vibrate the right side.
 	 *
-	 * Vibrates the passed controller by the passed left/right amounts.
+	 * Vibrates the passed gamepad by the passed left/right amounts.
 	 * */
-	void setVibration(ControllerID controller, uint16_t left, uint16_t right) {
+	void setVibration(GamepadID gamepad, uint16_t left, uint16_t right) {
 		XINPUT_VIBRATION vibrate;
 		ZeroMemory(&vibrate, sizeof(XINPUT_VIBRATION));
 
 		vibrate.wLeftMotorSpeed = left;
 		vibrate.wRightMotorSpeed = right;
 
-		XInputSetState(controller, &vibrate);
+		XInputSetState(gamepad, &vibrate);
 	}
 
 	/*
 	 * setVibrationLevel() returns nothing
 	 *
-		* @param  The id of the controller to vibrate.
+		* @param  The id of the gamepad to vibrate.
 		* @param  The amount to vibrate both sides.
 	 *
-	 * Vibrates the passed controller by the passed amount. Unlike the
+	 * Vibrates the passed gamepad by the passed amount. Unlike the
 	 * setVibration() functions, this is based on the percentage of how
 	 * much to vibrate. In other words 0.0f would mean 0% vibration,
 	 * and 1.0f would mean 100% vibration.
 	 * */
-	void setVibrationLevel(ControllerID controller, float amount) {
-		setVibration(controller, uint16_t(UINT16_MAX * amount), uint16_t(UINT16_MAX * amount));
+	void setVibrationLevel(GamepadID gamepad, float amount) {
+		setVibration(gamepad, uint16_t(UINT16_MAX * amount), uint16_t(UINT16_MAX * amount));
 	}
 
 	/*
 	 * setVibrationLevel() returns nothing
 	 *
-		* @param  The id of the controller to vibrate.
+		* @param  The id of the gamepad to vibrate.
 		* @param  The amount to vibrate the left side.
 		* @param  The amount to vibrate the right side.
 	 *
-	 * Vibrates the passed controller by the passed left/right amounts.
+	 * Vibrates the passed gamepad by the passed left/right amounts.
 	 * Unlike the setVibration() functions, this is based on the percentage of how
 	 * much to vibrate. In other words 0.0f would mean 0% vibration,
 	 * and 1.0f would mean 100% vibration.
 	 * */
-	void setVibrationLevel(ControllerID controller, float left, float right) {
-		setVibration(controller, uint16_t(UINT16_MAX * left), uint16_t(UINT16_MAX * right));
+	void setVibrationLevel(GamepadID gamepad, float left, float right) {
+		setVibration(gamepad, uint16_t(UINT16_MAX * left), uint16_t(UINT16_MAX * right));
 	}
 }
