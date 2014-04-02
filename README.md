@@ -20,10 +20,10 @@ int main() {
         while (easyx::poll(&evt)) {
             switch (evt.type) {
             case EASYX_EVENT_CONNECT:
-                printf("Controller #%d Detected\n", evt.controller);
+                printf("Gamepad #%d Detected\n", evt.gamepad);
                 break;
             case EASYX_EVENT_DISCONNECT:
-                printf("Controller #%d Lost\n", evt.controller);
+                printf("Gamepad #%d Lost\n", evt.gamepad);
                 break;
             }
         }
