@@ -13,17 +13,17 @@ Example
 #include <easyx\easyx.hpp>
 
 int main() {
+    easyx::Event event;
+    
     while (true) {
         easyx::update();
-        easyx::Event evt;
-
-        while (easyx::poll(&evt)) {
-            switch (evt.type) {
+        while (easyx::poll(&event)) {
+            switch (event.type) {
             case EASYX_EVENT_CONNECT:
-                printf("Gamepad #%d Detected\n", evt.gamepad);
+                printf("Gamepad #%d Detected\n", event.gamepad);
                 break;
             case EASYX_EVENT_DISCONNECT:
-                printf("Gamepad #%d Lost\n", evt.gamepad);
+                printf("Gamepad #%d Lost\n", event.gamepad);
                 break;
             }
         }
