@@ -235,7 +235,7 @@ namespace easyx {
 	}
 
 	/*
-	 * setAnalogThreshold() returns nothing
+	 * set_analog_threshold() returns nothing
 	 *
 		* @param  The id of the gamepad to have its threshold set.
 		* @param  The id of the analog stick(s) to set.
@@ -248,7 +248,7 @@ namespace easyx {
 	 * equivalent of the XInput deadzone definitions will effectively set
 	 * the threshold to zero.
 	 * */
-	void setAnalogThreshold(GamepadID gamepad, ButtonID id, int16_t amount) {
+	void set_analog_threshold(GamepadID gamepad, ButtonID id, int16_t amount) {
 		switch (id) {
 		case EASYX_LTHUMB:
 			data::thresholds[gamepad][0] = amount;
@@ -274,19 +274,19 @@ namespace easyx {
 	}
 
 	/*
-	 * setVibration() returns nothing
+	 * set_vibration() returns nothing
 	 *
 		* @param  The id of the gamepad to vibrate.
 		* @param  The amount to vibrate both sides.
 	 *
 	 * Vibrates the passed gamepad by the passed amount.
 	 * */
-	void setVibration(GamepadID gamepad, uint16_t amount) {
-		setVibration(gamepad, amount, amount);
+	void set_vibration(GamepadID gamepad, uint16_t amount) {
+		set_vibration(gamepad, amount, amount);
 	}
 
 	/*
-	 * setVibration() returns nothing
+	 * set_vibration() returns nothing
 	 *
 		* @param  The id of the gamepad to vibrate.
 		* @param  The amount to vibrate the left side.
@@ -294,7 +294,7 @@ namespace easyx {
 	 *
 	 * Vibrates the passed gamepad by the passed left/right amounts.
 	 * */
-	void setVibration(GamepadID gamepad, uint16_t left, uint16_t right) {
+	void set_vibration(GamepadID gamepad, uint16_t left, uint16_t right) {
 		XINPUT_VIBRATION vibrate;
 		ZeroMemory(&vibrate, sizeof(XINPUT_VIBRATION));
 
@@ -305,7 +305,7 @@ namespace easyx {
 	}
 
 	/*
-	 * setVibrationLevel() returns nothing
+	 * set_vibration_level() returns nothing
 	 *
 		* @param  The id of the gamepad to vibrate.
 		* @param  The amount to vibrate both sides.
@@ -315,12 +315,12 @@ namespace easyx {
 	 * much to vibrate. In other words 0.0f would mean 0% vibration,
 	 * and 1.0f would mean 100% vibration.
 	 * */
-	void setVibrationLevel(GamepadID gamepad, float amount) {
-		setVibration(gamepad, uint16_t(UINT16_MAX * amount), uint16_t(UINT16_MAX * amount));
+	void set_vibration_level(GamepadID gamepad, float amount) {
+		set_vibration(gamepad, uint16_t(UINT16_MAX * amount), uint16_t(UINT16_MAX * amount));
 	}
 
 	/*
-	 * setVibrationLevel() returns nothing
+	 * set_vibration_level() returns nothing
 	 *
 		* @param  The id of the gamepad to vibrate.
 		* @param  The amount to vibrate the left side.
@@ -331,7 +331,7 @@ namespace easyx {
 	 * much to vibrate. In other words 0.0f would mean 0% vibration,
 	 * and 1.0f would mean 100% vibration.
 	 * */
-	void setVibrationLevel(GamepadID gamepad, float left, float right) {
-		setVibration(gamepad, uint16_t(UINT16_MAX * left), uint16_t(UINT16_MAX * right));
+	void set_vibration_level(GamepadID gamepad, float left, float right) {
+		set_vibration(gamepad, uint16_t(UINT16_MAX * left), uint16_t(UINT16_MAX * right));
 	}
 }
