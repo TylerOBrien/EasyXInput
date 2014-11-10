@@ -37,7 +37,7 @@
 #define EASYX_EVENT_DISCONNECT 5
 
 namespace easyx {
-	/*
+    /*
      * class Event
      * A generic catch-all object for any possible event.
      * The angle member is only used for analog events (the triggers and sticks), so it has its
