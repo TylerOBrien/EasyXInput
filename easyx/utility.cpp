@@ -1,5 +1,6 @@
 /*
 * EasyXInput
+* http://tylerobrien.com
 * https://github.com/TylerOBrien/EasyXInput
 *
 * Copyright (c) 2014 Tyler O'Brien
