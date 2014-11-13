@@ -28,8 +28,6 @@
 #ifndef _EASYX_EVENT_HPP_
 #define _EASYX_EVENT_HPP_
 
-#include <stdint.h>
-
 #define EASYX_EVENT_PRESS      1
 #define EASYX_EVENT_RELEASE    2
 #define EASYX_EVENT_DOWN       3
@@ -37,23 +35,24 @@
 #define EASYX_EVENT_DISCONNECT 5
 
 namespace easyx {
-    /*
-     * class Event
-     * A generic catch-all object for any possible event.
-     * The angle member is only used for analog events (the triggers and sticks), so it has its
-     * own constructor. If not in use (i.e. a non-analog event) then angle will always equal zero.
-     * */
-    class Event {
-	public:
-        GamepadID gamepad;
-        EventType type;
-        int16_t angle;
-        ButtonID which;
 
-        Event();
-        Event(GamepadID gamepad, EventType type, ButtonID which);
-        Event(GamepadID gamepad, EventType type, ButtonID which, int16_t angle);
-    };
+/*
+ * A generic catch-all object for any possible event.
+ * The angle member is only used for analog events (the triggers and sticks), so it has its
+ * own constructor. If not in use (i.e. a non-analog event) then angle will always equal zero.
+ * */
+class Event {
+public:
+    GamepadID gamepad;
+    EventType type;
+    int16_t angle;
+    ButtonID which;
+
+    Event();
+    Event(GamepadID gamepad, EventType type, ButtonID which);
+    Event(GamepadID gamepad, EventType type, ButtonID which, int16_t angle);
+};
+
 }
 
 #endif

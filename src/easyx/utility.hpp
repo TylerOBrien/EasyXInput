@@ -28,11 +28,11 @@
 #ifndef _EASYX_UTILITY_HPP_
 #define _EASYX_UTILITY_HPP_
 
-#include <string>
-
 namespace easyx {
-	ButtonID id(const char *name);
-	std::string name(const ButtonID buttonid);
+
+ButtonID id(const char *name);
+std::string name(const ButtonID buttonid);
+
 }
 
 #endif

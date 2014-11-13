@@ -58,26 +58,30 @@
 
 #include <stdio.h>
 #include <stdint.h>
+#include <string>
+#include <string.h>
 #include <windows.h>
 #include <xinput.h>
 
 namespace easyx {
-	class Event;
 
-	typedef uint8_t GamepadID;
-	typedef uint16_t ButtonID;
-	typedef int16_t EventType;
-	typedef Event* PEvent;
+class Event;
 
-	void update();
-	bool poll(PEvent evt);
+typedef uint8_t GamepadID;
+typedef uint16_t ButtonID;
+typedef int16_t EventType;
+typedef Event* PEvent;
+
+void update();
+bool poll(PEvent evt);
 	
-	void set_analog_threshold(GamepadID controller, ButtonID id, int16_t amount);
+void set_analog_threshold(GamepadID controller, ButtonID id, int16_t amount);
 
-	void set_vibration(GamepadID controller, uint16_t amount);
-	void set_vibration(GamepadID controller, uint16_t left, uint16_t right);
-	void set_vibration_level(GamepadID controller, float amount);
-	void set_vibration_level(GamepadID controller, float left, float right);
+void set_vibration(GamepadID controller, uint16_t amount);
+void set_vibration(GamepadID controller, uint16_t left, uint16_t right);
+void set_vibration_level(GamepadID controller, float amount);
+void set_vibration_level(GamepadID controller, float left, float right);
+
 }
 
 #include "event.hpp"

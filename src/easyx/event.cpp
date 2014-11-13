@@ -28,61 +28,63 @@
 #include "easyx.hpp"
 
 namespace easyx {
-	 /*
-     * Constructor
-     *
-     * */
-    Event::Event()
-        : gamepad(-1),
-          type(0),
-          which(0),
-          angle(0) {
-        /* Intentionally left blank. */
-    }
 
-    /*
-     * Constructor
-     *
-        * @param  The ID of the gamepad. Will be an integer between 0-3.
-        * @param  The event type, e.g. EZX_PRESS or EZX_CONNECT.
-        * @param  The ID of the thing that triggered this event, e.g. EZX_A or EZX_LTRIGGER.
-     *
-     * This constructor is used for non-analog events.
-     * Those events are the following:
-        * EZX_PRESS, EZX_RELEASE, EZX_CONNECT, EZX_DISCONNECT
-     * */
-    Event::Event(
-        GamepadID gamepad,
-        EventType type,
-        ButtonID which)
-        : gamepad(gamepad),
-          type(type),
-          which(which),
-          angle(0) {
-        /* Intentionally left blank. */
-    }
+/*
+* Constructor
+*
+* */
+Event::Event()
+    : gamepad(-1),
+        type(0),
+        which(0),
+        angle(0) {
+    /* Intentionally left blank. */
+}
 
-    /*
-     * Constructor
-     *
-        * @param  The ID of the gamepad. Will be an integer between 0-3.
-        * @param  The event type, e.g. EZX_ANALOG.
-        * @param  The ID of the thing that triggered this event, e.g. EZX_A or EZX_LTRIGGER.
-        * @param  The angle of the analog that triggered this event.
-    *
-     * This constructor is used for analog events.
-     * Those events are the following:
-        * EZX_ANALOG
-     * */
-    Event::Event(
-        GamepadID gamepad,
-        EventType type,
-        ButtonID which,
-        int16_t angle)
-        : gamepad(gamepad),
-          type(type),
-          which(which),
-          angle(angle) {
-        /* Intentionally left blank. */
-    }
+/*
+* Constructor
+*
+	* @param  The ID of the gamepad. Will be an integer between 0-3.
+	* @param  The event type, e.g. EZX_PRESS or EZX_CONNECT.
+	* @param  The ID of the thing that triggered this event, e.g. EZX_A or EZX_LTRIGGER.
+*
+* This constructor is used for non-analog events.
+* Those events are the following:
+* EZX_PRESS, EZX_RELEASE, EZX_CONNECT, EZX_DISCONNECT
+* */
+Event::Event(
+    GamepadID gamepad,
+    EventType type,
+    ButtonID which)
+    : gamepad(gamepad),
+        type(type),
+        which(which),
+        angle(0) {
+    /* Intentionally left blank. */
+}
+
+/*
+* Constructor
+*
+	* @param  The ID of the gamepad. Will be an integer between 0-3.
+	* @param  The event type, e.g. EZX_ANALOG.
+	* @param  The ID of the thing that triggered this event, e.g. EZX_A or EZX_LTRIGGER.
+	* @param  The angle of the analog that triggered this event.
+*
+* This constructor is used for analog events.
+* Those events are the following:
+* EZX_ANALOG
+* */
+Event::Event(
+    GamepadID gamepad,
+    EventType type,
+    ButtonID which,
+    int16_t angle)
+    : gamepad(gamepad),
+        type(type),
+        which(which),
+        angle(angle) {
+    /* Intentionally left blank. */
+}
+
 }
