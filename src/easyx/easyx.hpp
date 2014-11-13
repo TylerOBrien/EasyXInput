@@ -58,11 +58,8 @@
 
 #include <stdio.h>
 #include <stdint.h>
-
-#ifndef EASYX_NOLIB
 #include <windows.h>
 #include <xinput.h>
-#endif
 
 namespace easyx {
 	class Event;
