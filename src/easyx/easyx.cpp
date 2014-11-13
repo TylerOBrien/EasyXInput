@@ -27,8 +27,6 @@
 
 #include "easyx.hpp"
 
-#include <windows.h>
-#include <xinput.h>
 #include <queue>
 
 #define LANALOG_THRESHOLD_X   (XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE + data::thresholds[id][0])
