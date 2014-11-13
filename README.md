@@ -4,12 +4,13 @@ This is a lightweight framework that has been designed to make working with XInp
 
 How to Use
 ----------
-Using EasyXInput only requires including the _\<easyx/easyx.hpp\>_ header file and linking the XInput library. The _\<xinput.h\>_ header only needs to be included if the preprocessor definitions of the button names are to be used. EasyXInput defines its own names for all buttons, but these are simply shortcuts that give the exact same values as the ones defined in _\<xinput.h\>_ are verbose. In other words the EASYX_A definition, for example, will give XINPUT_GAMEPAD_A. All of the EasyXInput preprocessor definitions can be found in the _\<easyx/easyx.hpp\>_ header.
+Download the header files from the _release_ directory and include them in your project.  
+Link to  ```XInput.lib``` as well as ```EasyXInput.lib```, also found in the _release_ directory.  
+Then simply include ```<easyx/easy.hpp>``` to use the framework.
 
 Example
 ----------
 ```cpp
-#include <stdio.h>
 #include <easyx\easyx.hpp>
 
 int main() {
