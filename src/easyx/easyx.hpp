@@ -56,7 +56,13 @@
 #define EASYX_LTHUMB_DEADZONE XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE
 #define EASYX_RTHUMB_DEADZONE XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE
 
+#include <stdio.h>
 #include <stdint.h>
+
+#ifndef EASYX_NOLIB
+#include <windows.h>
+#include <xinput.h>
+#endif
 
 namespace easyx {
 	class Event;
@@ -77,7 +83,7 @@ namespace easyx {
 	void set_vibration_level(GamepadID controller, float left, float right);
 }
 
-#include <easyx\event.hpp>
-#include <easyx\utility.hpp>
+#include "event.hpp"
+#include "utility.hpp"
 
 #endif

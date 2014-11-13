@@ -25,10 +25,8 @@
 * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 * */
 
-#include <easyx\easyx.hpp>
+#include "easyx.hpp"
 
-#include <windows.h>
-#include <xinput.h>
 #include <string>
 #include <string.h>
 
