@@ -4,8 +4,7 @@ Lightweight framework designed to make working with XInput in C++ simpler.
 # How to Use
 ...
 
-Example
-----------
+# Example
 ```cpp
 #include "easyx/easyx.hpp"
 
