@@ -1,5 +1,5 @@
 # EasyXInput
-Lightweight framework designed to make working with XInput in C++ simpler.
+Small API designed to make working with XInput in C++ simpler by hiding boilerplate code behind a small handful of functions and enums.
 
 # How to Use
 ...
