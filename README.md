@@ -1,9 +1,6 @@
 # EasyXInput
 ...
 
-# How to Use
-...
-
 # Example
 ```cpp
 #include "easyx/easyx.hpp"
